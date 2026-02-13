@@ -24,7 +24,19 @@ services:
       - ./proxy/.env
     ports:
       - '26200:80'
-
+  mongodb:
+    container_name: 'ost-expo-dev-mongodb'
+    hostname: 'ost-expo-dev-mongodb'
+    image: mongo:8.2.5
+    restart: unless-stopped
+    env_file:
+      - ./mongodb/.env
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - '26207:27017'
 volumes:
   mysql-data:
     name: 'ost-expo-dev-mysql-data'
+  mongodb-data:
+    name: 'ost-expo-dev-mongodb-data'

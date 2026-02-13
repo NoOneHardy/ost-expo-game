@@ -24,6 +24,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.springframework.boot:spring-boot-starter-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("io.kurrent:kurrentdb-client:1.1.1")
 
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
