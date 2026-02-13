@@ -77,7 +77,7 @@ app.post('/api/score', (req, res) => {
     return res.status(400).json({ error: 'playerId, playerName, and score are required' });
   }
   
-  const parsedScore = parseInt(score);
+  const parsedScore = parseInt(score, 10);
   if (isNaN(parsedScore)) {
     return res.status(400).json({ error: 'score must be a valid number' });
   }
@@ -103,7 +103,7 @@ app.post('/api/event', (req, res) => {
     return res.status(400).json({ error: 'playerId, playerName, and eventType are required' });
   }
   
-  const parsedPoints = points !== undefined ? parseInt(points) : 0;
+  const parsedPoints = points !== undefined ? parseInt(points, 10) : 0;
   if (isNaN(parsedPoints)) {
     return res.status(400).json({ error: 'points must be a valid number' });
   }
