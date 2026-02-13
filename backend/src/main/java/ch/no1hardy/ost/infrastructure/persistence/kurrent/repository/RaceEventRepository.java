@@ -28,7 +28,7 @@ public class RaceEventRepository {
 
     public RaceEvent findLast() {
         try {
-            RecordedEvent event = client.readStream(streamName, ReadStreamOptions.get().forwards().fromStart().maxCount(10)).get().getEvents().stream()
+            RecordedEvent event = client.readStream(streamName, ReadStreamOptions.get().backwards().fromEnd().maxCount(1)).get().getEvents().stream()
                     .map(ResolvedEvent::getEvent)
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Entity not found"));
