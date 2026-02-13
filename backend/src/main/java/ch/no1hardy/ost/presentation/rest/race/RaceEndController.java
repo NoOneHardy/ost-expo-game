@@ -3,7 +3,6 @@ package ch.no1hardy.ost.presentation.rest.race;
 import ch.no1hardy.ost.application.race.dto.in.RaceEndDto;
 import ch.no1hardy.ost.application.race.dto.out.RaceDto;
 import ch.no1hardy.ost.application.race.port.in.RaceEndUseCase;
-import ch.no1hardy.ost.application.race.port.in.RaceStartUseCase;
 import ch.no1hardy.ost.infrastructure.mapper.race.RaceDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

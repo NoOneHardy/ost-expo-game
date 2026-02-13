@@ -1,7 +1,8 @@
 package ch.no1hardy.ost.infrastructure.event.config.race;
 
 import ch.no1hardy.ost.application.race.event.RaceEndEventDispatcher;
-import ch.no1hardy.ost.infrastructure.event.listener.race.RaceEndEventListener;
+import ch.no1hardy.ost.infrastructure.event.listener.race.PersistScoreRaceEndEventEventListener;
+import ch.no1hardy.ost.infrastructure.event.listener.race.PublishViewModeRaceEndEventEventListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,10 +10,12 @@ import org.springframework.context.annotation.Configuration;
 public class RaceEndEventDispatcherConfig {
     @Bean
     public RaceEndEventDispatcher raceEndEventDispatcher(
-            RaceEndEventListener listener
+            PublishViewModeRaceEndEventEventListener publishViewModeRaceEndEventEventListener,
+            PersistScoreRaceEndEventEventListener persistScoreListener
     ) {
         RaceEndEventDispatcher dispatcher = new RaceEndEventDispatcher();
-        dispatcher.addListener(listener);
+        dispatcher.addListener(publishViewModeRaceEndEventEventListener);
+        dispatcher.addListener(persistScoreListener);
         return dispatcher;
     }
 }
