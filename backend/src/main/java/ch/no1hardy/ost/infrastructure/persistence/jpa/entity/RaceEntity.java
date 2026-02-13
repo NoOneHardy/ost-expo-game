@@ -17,4 +17,8 @@ public class RaceEntity {
     private UUID id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    String username;
+    String email;
+    boolean hasHighRisk;
+    boolean hasIssue;
 }

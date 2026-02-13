@@ -1,10 +1,10 @@
-package ch.no1hardy.ost.domain.race.model;
+package ch.no1hardy.ost.application.race.dto.out;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-public record Race(
+public record RaceDto(
         UUID id,
         LocalDateTime start,
         LocalDateTime end,
