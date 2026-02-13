@@ -1,0 +1,12 @@
+plugins {
+    id 'base'
+}
+
+task buildProxy {
+    description = 'Prepare Nginx configuration'
+    doLast {
+        println 'Nginx configuration is ready'
+    }
+}
+
+build.dependsOn buildProxy

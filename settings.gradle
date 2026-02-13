@@ -1,0 +1,6 @@
+rootProject.name = 'ost-expo-game'
+
+include 'frontend'
+include 'backend'
+include 'proxy'
+include 'mysql'

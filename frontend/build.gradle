@@ -1,0 +1,42 @@
+plugins {
+    id 'base'
+    id 'com.github.node-gradle.node' version '7.0.1'
+}
+
+node {
+    version = '20.11.1'
+    npmVersion = '10.2.4'
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+    npmWorkDir = file("${project.buildDir}/npm")
+    nodeProjectDir = file("${project.projectDir}")
+}
+
+task installDependencies(type: NpmTask) {
+    description = 'Install Angular dependencies'
+    args = ['install']
+}
+
+task buildFrontend(type: NpmTask, dependsOn: installDependencies) {
+    description = 'Build Angular application'
+    args = ['run', 'build']
+}
+
+task testFrontend(type: NpmTask, dependsOn: installDependencies) {
+    description = 'Run Angular tests'
+    args = ['run', 'test', '--', '--watch=false', '--browsers=ChromeHeadless']
+}
+
+task serve(type: NpmTask, dependsOn: installDependencies) {
+    description = 'Serve Angular application for development'
+    args = ['run', 'start']
+}
+
+build.dependsOn buildFrontend
+check.dependsOn testFrontend
+
+clean {
+    delete 'node_modules'
+    delete 'dist'
+    delete '.angular'
+}
