@@ -1,0 +1,30 @@
+name: ost-expo-dev
+services:
+  mysql:
+    container_name: 'ost-expo-dev-mysql'
+    hostname: 'ost-expo-dev-mysql'
+    image: mysql:9.5.0
+    restart: unless-stopped
+    env_file:
+      - ./mysql/.env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: true
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - '26206:3306'
+  proxy:
+    container_name: 'ost-expo-dev-proxy'
+    hostname: 'ost-expo-dev-proxy'
+    build:
+      dockerfile: './proxy/Dockerfile'
+      context: '.'
+    restart: unless-stopped
+    env_file:
+      - ./proxy/.env
+    ports:
+      - '26200:80'
+
+volumes:
+  mysql-data:
+    name: 'ost-expo-dev-mysql-data'

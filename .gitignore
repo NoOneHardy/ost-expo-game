@@ -1,0 +1,14 @@
+# IDE
+.idea
+.vscode
+
+# Environment variables
+**/*.env
+
+# Gradle
+.gradle
+build
+.kotlin
+
+# Node
+node_modules
