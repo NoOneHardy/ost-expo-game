@@ -13,10 +13,6 @@ public abstract class BaseEventDispatcher<T extends BaseEvent> {
         listeners.add(listener);
     }
 
-    public void removeListener(EventListenerPort<T> listener) {
-        listeners.remove(listener);
-    }
-
     public void dispatch(T event) {
         listeners.forEach(listener -> listener.update(event));
     }

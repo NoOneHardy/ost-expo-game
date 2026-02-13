@@ -1,11 +1,9 @@
-package ch.no1hardy.ost.application.race.event;
+package ch.no1hardy.ost.application.race.event.race;
 
 import ch.no1hardy.ost.application.common.event.BaseEventDispatcher;
 import ch.no1hardy.ost.domain.race.event.RaceStartEvent;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class RaceStartEventDispatcher extends BaseEventDispatcher<RaceStartEvent> {
 }
