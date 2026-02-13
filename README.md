@@ -30,12 +30,13 @@ ost-expo-game/
 ### Frontend (Angular)
 
 - **Location**: `frontend/`
-- **Technology**: Angular 17
+- **Technology**: Angular 19.2.18
 - **Port**: 4200
 - **Features**:
   - Modern Angular standalone components
   - Routing configured
   - CSS styling
+  - Security patches applied (XSRF & XSS vulnerabilities fixed)
 
 ### Proxy (Nginx)
 
@@ -60,7 +61,7 @@ ost-expo-game/
 ## Prerequisites
 
 - Java 17 or higher
-- Node.js 20 or higher (for frontend development)
+- Node.js 20.11.1 or higher (for frontend development)
 - Docker and Docker Compose (for containerized deployment)
 - Gradle 8.5 or higher (wrapper included)
 

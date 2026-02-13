@@ -200,4 +200,11 @@ Tables created by `mysql/init.sql`:
 - Java: No alerts found
 - JavaScript: No alerts found
 
-Note: Frontend npm dependencies show some vulnerabilities in dev dependencies. Run `npm audit` for details.
+✅ Angular security vulnerabilities resolved:
+- Upgraded from Angular 17.3.12 to 19.2.18
+- Fixed XSRF Token Leakage vulnerability
+- Fixed XSS via Unsanitized SVG Script Attributes
+- Fixed Stored XSS via SVG Animation, SVG URL and MathML Attributes
+- All production dependencies are now secure (0 vulnerabilities)
+
+Note: Some dev dependencies have known vulnerabilities in non-production code paths.
