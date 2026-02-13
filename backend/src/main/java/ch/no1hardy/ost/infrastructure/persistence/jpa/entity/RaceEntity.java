@@ -16,4 +16,5 @@ public class RaceEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

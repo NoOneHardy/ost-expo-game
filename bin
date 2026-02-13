@@ -1,0 +1,5 @@
+SUBSCRIBE
+id:sub-0
+destination:/topic/scores/game123
+
+<NULL_BYTE_HERE>
