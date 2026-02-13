@@ -55,7 +55,7 @@ router.post('/races/:id/end', (req, res) => {
   race.end(riskDecision, email);
 
   // If username is provided, create and store an event
-  const event = username ? new Event(username) : null;
+  const event = (username && username.trim()) ? new Event(username.trim()) : null;
   if (event) {
     dataStore.saveEvent(event);
   }
