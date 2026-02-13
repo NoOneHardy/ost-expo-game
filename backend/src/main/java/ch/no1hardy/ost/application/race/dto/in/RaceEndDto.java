@@ -1,4 +1,4 @@
-package ch.no1hardy.ost.application.user.dto.in;
+package ch.no1hardy.ost.application.race.dto.in;
 
 import java.util.Optional;
 
