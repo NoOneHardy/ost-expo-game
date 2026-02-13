@@ -77,11 +77,16 @@ app.post('/api/score', (req, res) => {
     return res.status(400).json({ error: 'playerId, playerName, and score are required' });
   }
   
+  const parsedScore = parseInt(score);
+  if (isNaN(parsedScore)) {
+    return res.status(400).json({ error: 'score must be a valid number' });
+  }
+  
   const newScore = {
     id: nextScoreId++,
     playerId,
     playerName,
-    score: parseInt(score),
+    score: parsedScore,
     timestamp: new Date().toISOString()
   };
   
@@ -98,12 +103,17 @@ app.post('/api/event', (req, res) => {
     return res.status(400).json({ error: 'playerId, playerName, and eventType are required' });
   }
   
+  const parsedPoints = points !== undefined ? parseInt(points) : 0;
+  if (isNaN(parsedPoints)) {
+    return res.status(400).json({ error: 'points must be a valid number' });
+  }
+  
   const newEvent = {
     id: nextEventId++,
     playerId,
     playerName,
     eventType,
-    points: parseInt(points) || 0,
+    points: parsedPoints,
     timestamp: new Date().toISOString(),
     description: description || `${playerName} ${eventType}`
   };
