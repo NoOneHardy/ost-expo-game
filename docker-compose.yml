@@ -1,0 +1,60 @@
+name: ost-expo-dev
+services:
+  mysql:
+    container_name: 'ost-expo-dev-mysql'
+    hostname: 'ost-expo-dev-mysql'
+    image: mysql:9.5.0
+    restart: unless-stopped
+    env_file:
+      - ./mysql/.env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: true
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - '26206:3306'
+  proxy:
+    container_name: 'ost-expo-dev-proxy'
+    hostname: 'ost-expo-dev-proxy'
+    build:
+      dockerfile: './proxy/Dockerfile'
+      context: '.'
+    restart: unless-stopped
+    env_file:
+      - ./proxy/.env
+    ports:
+      - '26200:80'
+  mongodb:
+    container_name: 'ost-expo-dev-mongodb'
+    hostname: 'ost-expo-dev-mongodb'
+    image: mongo:8.2.5
+    restart: unless-stopped
+    env_file:
+      - ./mongodb/.env
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - '26207:27017'
+  kurrentdb:
+    container_name: 'ost-expo-dev-kurrentdb'
+    hostname: 'ost-expo-dev-kurrentdb'
+    image: kurrentplatform/kurrentdb:25.1
+    restart: unless-stopped
+    environment:
+      KURRENTDB_CLUSTER_SIZE: 1
+      KURRENTDB_RUN_PROJECTIONS: All
+      KURRENTDB_START_STANDARD_PROJECTIONS: true
+      KURRENTDB_NODE_PORT: 2113
+      KURRENTDB_INSECURE: true
+      KURRENTDB_ENABLE_ATOM_PUB_OVER_HTTP: true
+    volumes:
+        - kurrentdb-data:/var/lib/kurrentdb
+    ports:
+      - '26208:2113'
+volumes:
+  mysql-data:
+    name: 'ost-expo-dev-mysql-data'
+  mongodb-data:
+    name: 'ost-expo-dev-mongodb-data'
+  kurrentdb-data:
+    name: 'ost-expo-dev-kurrentdb-data'
