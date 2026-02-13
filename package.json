@@ -1,0 +1,32 @@
+{
+  "name": "ost-expo-game",
+  "version": "1.0.0",
+  "description": "The software for the expo game for the OST developed during a hack- and makeathon",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "demo": "npm run build && node dist/demo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoOneHardy/ost-expo-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NoOneHardy/ost-expo-game/issues"
+  },
+  "homepage": "https://github.com/NoOneHardy/ost-expo-game#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.2.3",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
+}
