@@ -24,6 +24,21 @@ Access the application:
 - Backend API: http://localhost:8080/api/health
 - Nginx Proxy: http://localhost
 
+### Custom Environment Variables (Optional)
+
+To customize database settings, create a `.env` file in the root directory:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit with your values
+DB_ROOT_PASSWORD=your_password
+DB_NAME=your_database_name
+```
+
+The `.env` file is git-ignored and will override the default values in `docker-compose.yml`.
+
 ## Development Setup
 
 ### Backend (Spring Boot)
@@ -32,8 +47,11 @@ Access the application:
 # Build backend
 ./gradlew :backend:build
 
-# Run backend
+# Run backend (local development with localhost MySQL)
 ./gradlew :backend:bootRun
+
+# Run backend with Docker profile (connects to mysql container)
+./gradlew :backend:bootRun --args='--spring.profiles.active=docker'
 
 # Run tests
 ./gradlew :backend:test
@@ -41,6 +59,10 @@ Access the application:
 
 Backend will be available at http://localhost:8080
 Health check endpoint: http://localhost:8080/api/health
+
+**Configuration Profiles:**
+- **default**: Uses `localhost:3306` for database connection (local development)
+- **docker**: Uses `mysql:3306` for database connection (Docker environments)
 
 ### Frontend (Angular)
 
@@ -126,7 +148,11 @@ docker run -d -p 3306:3306 --name ost-expo-mysql ost-expo-mysql
 ost-expo-game/
 ├── backend/              # Spring Boot backend
 │   ├── src/
-│   │   ├── main/java/   # Application code
+│   │   ├── main/
+│   │   │   ├── java/   # Application code
+│   │   │   └── resources/
+│   │   │       ├── application.properties        # Default config (localhost)
+│   │   │       └── application-docker.properties # Docker profile config
 │   │   └── test/java/   # Test code
 │   ├── Dockerfile
 │   └── build.gradle
@@ -144,16 +170,40 @@ ost-expo-game/
 │   ├── init.sql
 │   ├── Dockerfile
 │   └── build.gradle
-├── build.gradle         # Root Gradle config
+├── build.gradle         # Root Gradle config with shared settings
+├── gradle.properties    # Centralized version configuration
 ├── settings.gradle      # Multi-module settings
+├── .env.example         # Example environment variables
 └── docker-compose.yml   # Docker orchestration
 ```
+
+## Configuration Management
+
+The project uses a simplified, centralized configuration approach:
+
+### Gradle Configuration
+- **`gradle.properties`**: Central location for version numbers (Java, Spring Boot, Node.js, npm)
+- **`build.gradle` (root)**: Shared repository and Java configuration for all submodules
+- **Submodule `build.gradle` files**: Minimal, focused on module-specific dependencies
+
+### Application Configuration
+- **`application.properties`**: Default configuration for local development (localhost database)
+- **`application-docker.properties`**: Docker-specific overrides (mysql container hostname)
+- Spring profiles automatically activated via `SPRING_PROFILES_ACTIVE` environment variable
+
+### Docker Configuration
+- **`docker-compose.yml`**: Uses environment variable substitution with sensible defaults
+- **`.env` file** (optional, git-ignored): Override defaults without modifying docker-compose.yml
+- Database credentials can be customized via environment variables
 
 ## Troubleshooting
 
 ### Backend won't start
 - Check if MySQL is running: `docker ps | grep mysql`
-- Verify database credentials in `application.properties`
+- Verify the correct profile is active:
+  - Local development: Uses default profile (localhost:3306)
+  - Docker: Uses docker profile (mysql:3306) - activated automatically by docker-compose
+- Check database credentials match between `.env` (if used) and `application*.properties`
 - Check logs: `./gradlew :backend:bootRun --info`
 
 ### Frontend build fails
@@ -163,8 +213,14 @@ ost-expo-game/
 
 ### Docker Compose issues
 - Check container logs: `docker-compose logs [service-name]`
+- Verify environment variables: Check `.env` file if you created one
 - Restart services: `docker-compose restart`
 - Clean restart: `docker-compose down && docker-compose up -d`
+
+### Configuration changes not taking effect
+- For Gradle: Run `./gradlew clean` and rebuild
+- For Docker: Run `docker-compose down` and `docker-compose up --build -d`
+- For Spring profiles: Ensure `SPRING_PROFILES_ACTIVE` is set correctly
 
 ## API Endpoints
 

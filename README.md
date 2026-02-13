@@ -65,6 +65,17 @@ ost-expo-game/
 - Docker and Docker Compose (for containerized deployment)
 - Gradle 8.5 or higher (wrapper included)
 
+## Configuration
+
+This project uses a **simplified, centralized configuration** approach:
+
+- **Version management**: All versions (Java, Spring Boot, Node.js) are defined in `gradle.properties`
+- **Environment profiles**: Spring Boot uses profiles (`default` for local, `docker` for containers)
+- **Environment variables**: Docker Compose supports `.env` file for custom database credentials
+- **Shared Gradle config**: Common repository and Java settings in root `build.gradle`
+
+See [QUICKSTART.md](QUICKSTART.md#configuration-management) for detailed configuration documentation.
+
 ## Building the Project
 
 ### Using Gradle
