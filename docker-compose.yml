@@ -34,6 +34,8 @@ services:
     build: ./frontend
     container_name: ost-expo-frontend
     ports:
+      # Port 4200 exposed for direct frontend access during development
+      # In production, access via proxy on port 80
       - "4200:4200"
     networks:
       - ost-expo-network
