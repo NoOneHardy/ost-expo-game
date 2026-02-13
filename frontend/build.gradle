@@ -4,8 +4,8 @@ plugins {
 }
 
 node {
-    version = '20.11.1'
-    npmVersion = '10.2.4'
+    version = project.findProperty('nodeVersion') ?: '20.11.1'
+    npmVersion = project.findProperty('npmVersion') ?: '10.2.4'
     download = true
     workDir = file("${project.buildDir}/nodejs")
     npmWorkDir = file("${project.buildDir}/npm")

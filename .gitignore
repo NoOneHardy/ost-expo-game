@@ -40,6 +40,9 @@ yarn-error.log*
 # Docker
 mysql/data/
 
+# Environment Variables
+.env
+
 # Temporary files
 /tmp/
 *.bak

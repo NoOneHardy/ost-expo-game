@@ -5,7 +5,24 @@ plugins {
 group = 'com.ost.expo'
 version = '1.0.0'
 
+// Apply shared configuration to all subprojects
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
 subprojects {
     group = rootProject.group
     version = rootProject.version
+    
+    plugins.withType(JavaPlugin) {
+        java {
+            sourceCompatibility = JavaVersion.toVersion(project.findProperty('javaVersion') ?: '17')
+        }
+        
+        tasks.withType(Test) {
+            useJUnitPlatform()
+        }
+    }
 }
