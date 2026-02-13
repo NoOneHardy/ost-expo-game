@@ -29,8 +29,8 @@ let nextEventId = events.length + 1;
 
 // GET /api/scoreboard - Returns latest scoreboard with recent events
 app.get('/api/scoreboard', (req, res) => {
-  const limit = parseInt(req.query.limit) || 10;
-  const eventsLimit = parseInt(req.query.eventsLimit) || 20;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const eventsLimit = parseInt(req.query.eventsLimit, 10) || 20;
   
   // Sort scores by score descending
   const topScores = [...scores]
@@ -51,7 +51,7 @@ app.get('/api/scoreboard', (req, res) => {
 
 // GET /api/scores - Returns all scores
 app.get('/api/scores', (req, res) => {
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit, 10) || 10;
   const topScores = [...scores]
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
@@ -61,7 +61,7 @@ app.get('/api/scores', (req, res) => {
 
 // GET /api/events - Returns all events
 app.get('/api/events', (req, res) => {
-  const limit = parseInt(req.query.limit) || 20;
+  const limit = parseInt(req.query.limit, 10) || 20;
   const recentEvents = [...events]
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
     .slice(0, limit);
