@@ -1,11 +1,14 @@
 package ch.no1hardy.ost.controller;
 
+import ch.no1hardy.ost.infrastructure.persistence.kurrent.event.ScoreReceived;
+import ch.no1hardy.ost.infrastructure.persistence.kurrent.repository.ScoreReceivedRepository;
 import ch.no1hardy.ost.infrastructure.persistence.mongo.document.Scoreboard;
 import ch.no1hardy.ost.infrastructure.persistence.mongo.repository.ScoreboardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HealthController {
     private final ScoreboardRepository repository;
+    private final ScoreReceivedRepository scoreReceivedRepository;
 
     @GetMapping("/health")
     public Map<String, String> health() {
@@ -37,4 +41,19 @@ public class HealthController {
         }
         return response;
     }
+
+    @GetMapping("/health/test-kurrent")
+    public Map<String, String> testKurrent() {
+        Map<String, String> response = new HashMap<>();
+        try {
+            ScoreReceived event = new ScoreReceived(UUID.randomUUID(), "Test Player", 100, LocalDateTime.now());
+            ScoreReceived res = scoreReceivedRepository.save(event);
+            response.put("kurrent", res.toString());
+        } catch (Exception e) {
+            response.put("kurrent", "DOWN");
+            response.put("error", e.getMessage());
+        }
+        return response;
+    }
+
 }
