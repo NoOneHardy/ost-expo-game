@@ -1,0 +1,12 @@
+plugins {
+    id 'base'
+}
+
+task buildMysql {
+    description = 'Prepare MySQL configuration'
+    doLast {
+        println 'MySQL configuration is ready'
+    }
+}
+
+build.dependsOn buildMysql

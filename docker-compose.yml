@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  mysql:
+    build: ./mysql
+    container_name: ost-expo-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ost_expo_game
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ost-expo-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: ost-expo-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ost_expo_game
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ost-expo-network
+
+  frontend:
+    build: ./frontend
+    container_name: ost-expo-frontend
+    ports:
+      - "4200:4200"
+    networks:
+      - ost-expo-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  proxy:
+    build: ./proxy
+    container_name: ost-expo-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - ost-expo-network
+
+volumes:
+  mysql-data:
+
+networks:
+  ost-expo-network:
+    driver: bridge
