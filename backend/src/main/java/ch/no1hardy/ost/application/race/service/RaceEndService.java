@@ -19,6 +19,7 @@ public class RaceEndService implements RaceEndUseCase {
 
     @Override
     public Optional<Race> endRace(RaceEndDto raceEndDto, UUID id) {
+
         LocalDateTime endDate = LocalDateTime.now();
         Optional<Race> race = repository.endRace(raceEndDto, endDate, id);
         race.ifPresent(r -> dispatcher.dispatch(new RaceEndEvent(r)));

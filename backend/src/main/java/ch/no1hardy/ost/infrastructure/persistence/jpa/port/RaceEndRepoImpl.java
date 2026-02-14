@@ -24,9 +24,14 @@ public class RaceEndRepoImpl implements RaceEndRepoPort {
     @Override
     public Optional<Race> endRace(RaceEndDto dto, LocalDateTime endTime, UUID id) {
         Optional<RaceEntity> entity = repository.findById(id);
+        if (isAlreadyCompleted(entity)) return Optional.empty();
         Optional<Race> race = entity.map(e -> dtoMapper.fromDto(id, dto, e.getStartTime(), endTime));
         return race.map(entityMapper::toEntity)
                 .map(repository::save)
                 .map(entityMapper::toDomain);
+    }
+
+    private boolean isAlreadyCompleted(Optional<RaceEntity> entity) {
+        return entity.map(RaceEntity::getEndTime).orElse(null) != null;
     }
 }
